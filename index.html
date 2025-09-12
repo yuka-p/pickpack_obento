@@ -2,12 +2,45 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Test Site</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <title>PickPackお弁当</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>こんにちは GitHub Pages</h1>
-  <script src="./js/app.js"></script>
+  <h1>PickPackお弁当</h1>
+
+  <!-- 主食選択 -->
+  <div id="main-food">
+    <h3>主食</h3>
+    <button onclick="selectFood('rice', 'onigiri')">おにぎり</button>
+    <button onclick="selectFood('rice', 'takikomi')">炊き込みご飯</button>
+    <button onclick="selectFood('rice', 'hinomaru')">日の丸ご飯</button>
+  </div>
+
+  <!-- 主菜選択 -->
+  <div id="main-dish">
+    <h3>主菜</h3>
+    <button onclick="selectFood('main', 'karaage')">唐揚げ</button>
+    <button onclick="selectFood('main', 'yaki-zakana')">焼き魚</button>
+    <button onclick="selectFood('main', 'tonkatsu')">とんかつ</button>
+  </div>
+
+  <!-- 副菜選択 -->
+  <div id="side-dish">
+    <h3>副菜（最大3つ）</h3>
+    <button onclick="selectFood('side', 'kinpira')">きんぴらごぼう</button>
+    <button onclick="selectFood('side', 'tamago')">卵焼き</button>
+    <button onclick="selectFood('side', 'umani')">大学芋</button>
+    <button onclick="selectFood('side', 'macaroni')">マカロニサラダ</button>
+  </div>
+
+  <!-- お弁当箱 -->
+  <h3>あなたのお弁当</h3>
+  <div id="bento-box"></div>
+
+  <!-- シェアボタン -->
+  <button id="share-btn">Xでシェア</button>
+
+  <script src="script.js"></script>
 </body>
 </html>
+
