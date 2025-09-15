@@ -85,7 +85,7 @@ function renderBento() {
 
   // ====== サイズ・位置設定オブジェクト ======
   const layout = {
-    rice:    { left: '30%', top: '60%', width: '280px' },
+    rice:    { left: '32%', top: '60%', width: '280px' },
     leaf:    { left: '50%', top: '50%', width: '350px' },
     main:    { left: '65%', top: '55%', width: '300px' },
     // 副菜3つ分の座標
