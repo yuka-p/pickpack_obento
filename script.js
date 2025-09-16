@@ -91,8 +91,8 @@ function renderBento() {
     // 副菜3つ分の座標
     side1:   { left: '60%', top: '75%', width: '150px' }, // 手前1
     side2:   { left: '80%', top: '75%', width: '150px' }, // 手前2
-    side3:   { left: '60%', top: '30%', width: '150px' }, // 奥
-    dessert: { left: '82%', top: '40%', width: '150px' }
+    side3:   { left: '60%', top: '25%', width: '150px' }, // 奥
+    dessert: { left: '82%', top: '30%', width: '150px' }
   };
   // ==========================================
 
