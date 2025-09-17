@@ -12,24 +12,31 @@
   <h1></h1>
   <div class="container">
     <h2>副菜（3つ）</h2>
-    <button class="option-btn" data-type="side" data-value="sausage">ウインナー</button>
-    <button class="option-btn" data-type="side" data-value="shrimp-gratin">エビグラタン</button>
-    <button class="option-btn" data-type="side" data-value="minitomato">ミニトマト</button>
-    <button class="option-btn" data-type="side" data-value="meatballs">ミートボール</button>
-    <button class="option-btn" data-type="side" data-value="tamagoyaki">たまごやき</button>
-    <button class="option-btn" data-type="side" data-value="kinpira-gobo">きんぴらごぼう</button>
-    <button class="option-btn" data-type="side" data-value="spinach">ほうれん草の和え物</button>
-    <button class="option-btn" data-type="side" data-value="potato-salad">ポテトサラダ</button>
-    <button class="option-btn" data-type="side" data-value="macaroni-salad">マカロニサラダ</button>
-    <button class="option-btn" data-type="side" data-value="boiled-pumpkin">かぼちゃの煮物</button>
-    <button class="option-btn" data-type="side" data-value="mushroom">ピーマンときのこの炒め物</button>
+    <div id="side-message" class="message-area"></div>
+    <button class="option-btn" data-type="side" data-value="sausage" data-message="やっぱりお弁当に欠かせない🌭">ウインナー</button>
+    <button class="option-btn" data-type="side" data-value="shrimp-gratin" data-message="クリーミーで彩りもばっちり🦐">エビグラタン</button>
+    <button class="option-btn" data-type="side" data-value="minitomato" data-message="赤が映える、さっぱり味🍅">ミニトマト</button>
+    <button class="option-btn" data-type="side" data-value="meatballs" data-message="ころころ可愛い、味もしっかり🍖">ミートボール</button>
+    <button class="option-btn" data-type="side" data-value="tamagoyaki" data-message="甘め？しょっぱめ？あなた好みに🥚">たまごやき</button>
+    <button class="option-btn" data-type="side" data-value="kinpira-gobo" data-message="シャキシャキ食感でお箸が止まらない🥢">きんぴらごぼう</button>
+    <button class="option-btn" data-type="side" data-value="spinach" data-message="緑色で見た目も元気に💚">ほうれん草の和え物</button>
+    <button class="option-btn" data-type="side" data-value="potato-salad" data-message="まろやかで子どもも大好き🥔">ポテトサラダ</button>
+    <button class="option-btn" data-type="side" data-value="macaroni-salad" data-message="マヨの魔法🎶">マカロニサラダ</button>
+    <button class="option-btn" data-type="side" data-value="boiled-pumpkin" data-message="甘くてほっこりやさしい味🎃">かぼちゃの煮物</button>
+    <button class="option-btn" data-type="side" data-value="mushroom" data-message="きのこやお野菜で秋を感じよう🍄">ピーマンときのこの炒め物</button>
+    <br>
+    <br>
+    <br>
 
     <h2>デザート（1つ）</h2>
-    <button class="option-btn" data-type="dessert" data-value="apple-rabbit">りんご</button>
-    <button class="option-btn" data-type="dessert" data-value="orange">オレンジ</button>
-    <button class="option-btn" data-type="dessert" data-value="kurikinton">栗きんとん</button>
-    <button class="option-btn" data-type="dessert" data-value="halloween-special1">Halloween Special</button>
-     <br>
+    <div id="dessert-message" class="message-area"></div>
+    <button class="option-btn" data-type="dessert" data-value="apple-rabbit" data-message="シャキッと甘酸っぱいお口直し🍎">りんご</button>
+    <button class="option-btn" data-type="dessert" data-value="orange" data-message="さっぱりビタミン補給に😊">オレンジ</button>
+    <button class="option-btn" data-type="dessert" data-value="kurikinton" data-message="ひそかに金運アップ🌰">栗きんとん</button>
+    <button class="option-btn" data-type="dessert" data-value="halloween" data-message="お弁当に小さなハロウィンパーティ登場🎃">Halloween Special</button>
+    
+    <br>
+    <button id="back-btn">戻る</button>
     <button id="go-finish">完成ページへ</button>
   </div>
   <script src="script.js"></script>

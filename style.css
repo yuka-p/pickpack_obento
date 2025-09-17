@@ -13,7 +13,7 @@ body {
   margin: 0;
   padding: 40px 12px;
   color: #222;
-  background-image: url('images/bg-pattern.png'); /* ← 背景画像のパス */
+  background-image: url('images/bg-pattern.jpg'); /* ← 背景画像のパス */
   background-size: cover;
   background-position: top left;
   background-attachment: scroll;
@@ -34,11 +34,24 @@ h1 {
   max-width: var(--max-width);
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
-  padding: 20px;
+  padding: 70px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   backdrop-filter: blur(6px); /* サポートブラウザのみ */
   -webkit-backdrop-filter: blur(6px);
+}
+
+.logo-container {
+  display: flex;           /* 中央寄せの基本 */
+  justify-content: center; /* 水平方向中央 */
+  align-items: center;     /* 垂直方向中央 */
+  height: 200px;           /* 必要に応じて高さ */
+  margin-top: 40px;        /* ページ上部からの余白 */
+}
+
+.logo {
+  width: 200px;  /* 画像の横幅を指定 */
+  height: auto;  /* 縦横比を保ったまま自動調整 */
 }
 
 /* 見出しなど */
@@ -108,6 +121,18 @@ h1 {
   border-color: #f08080;
 }
 
+.message-area {
+  margin-top: 5px;
+  padding: 0;
+  background: none;       /* 背景なし */
+  border: none;           /* 枠線なし */
+  font-size: 16px;
+  color: #333;            /* 好きな色に変更可能 */
+  text-align: center;       /* 文字揃え（左・中央・右）選べます */
+  min-height: 1em;        /* 高さ確保（なくてもOK） */
+}
+
+
 /* 弁当箱全体のコンテナ */
 #bento-area {
   position: relative;
@@ -160,9 +185,9 @@ h1 {
 }
 .bento-front {
   position: absolute;
-  width: 101%;
-  bottom: -50px; /* ←高さ微調整 */
-  left: -5px;
+  width: 102%;
+  bottom: -55px; /* ←高さ微調整 */
+  left: -13px;
   z-index: 6;
 }
 
