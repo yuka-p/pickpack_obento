@@ -12,7 +12,8 @@
   <div class="container">
     <h1>完成しました！</h1>
     <h2 id="bento-title"></h2>
-    <button id="rename-btn">名前をつける</button>
+    <button id="rename-btn">自分でお弁当に名前をつける</button>
+    <br>
     <div id="rename-container" style="display:none;">
       <input type="text" id="custom-title-input" placeholder="お弁当の名前を入力">
       <button id="update-title-btn">更新</button>
@@ -25,11 +26,14 @@
       <!-- お弁当箱の手前パーツ -->
       <img src="images/box-front.png" class="bento-front">
     </div>
-    <p id="bento-message"></p>
+    <div id="bento-message"></div>
+    <br>
     <button id="share-x">Xでシェアする</button>
     <br>
-    <button id="back-btn">戻る</button>
-    <button id="restart-btn">もう一度つくる</button>
+    <div class="btn-group">
+      <button id="back-btn">戻る</button>
+      <button id="restart-btn">もう一度つくる</button>
+    </div>
   </div>
   <br>
   <script src="script.js"></script>

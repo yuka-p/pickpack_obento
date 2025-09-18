@@ -7,19 +7,20 @@
 
 body {
   font-family: 'Zen Maru Gothic', sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   text-align: center;
-  height: 100%;
+  min-height: 100svh; /* ←スマホでも高さを確保 */
   margin: 0;
-  padding: 40px 12px;
+  padding: 0;
   color: #222;
-  background-image: url('images/bg-pattern.jpg'); /* ← 背景画像のパス */
+  /* 背景画像を中央固定に */
+  background-image: url('images/bg-pattern.jpg');
   background-size: cover;
-  background-position: top left;
-  background-attachment: scroll;
+  background-position: center center; /* ←中央寄せ */
+  background-attachment: fixed; /* ←背景固定 */
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center; /* ←縦方向も中央に */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -30,14 +31,14 @@ h1 {
 }
 
 .container {
-  width: 80%;
-  max-width: var(--max-width);
+  width: 90%; /* ←スマホ対応 */
+  max-width: 600px; /* ←PC用 */
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
-  padding: 70px;
+  padding: 30px; /* ←スマホ用に小さく */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
-  backdrop-filter: blur(6px); /* サポートブラウザのみ */
+  backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
@@ -45,12 +46,12 @@ h1 {
   display: flex;           /* 中央寄せの基本 */
   justify-content: center; /* 水平方向中央 */
   align-items: center;     /* 垂直方向中央 */
-  height: 200px;           /* 必要に応じて高さ */
+  height: 400px;           /* 必要に応じて高さ */
   margin-top: 40px;        /* ページ上部からの余白 */
 }
 
 .logo {
-  width: 200px;  /* 画像の横幅を指定 */
+  width: 400px;  /* 画像の横幅を指定 */
   height: auto;  /* 縦横比を保ったまま自動調整 */
 }
 
@@ -132,6 +133,26 @@ h1 {
   min-height: 1em;        /* 高さ確保（なくてもOK） */
 }
 
+#bento-message {
+  margin-top: 5px;
+  padding: 0;
+  background: none;       /* 背景なし */
+  border: none;           /* 枠線なし */
+  font-size: 18px;
+  color: #333;            /* 好きな色に変更可能 */
+  text-align: center;       /* 文字揃え（左・中央・右）選べます */
+}
+
+#custom-title-input {
+  font-size: 16px;
+  margin-top: 20px; 
+  padding: 10px; 
+  width: 50%; 
+  max-width: 400px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
 
 /* 弁当箱全体のコンテナ */
 #bento-area {
@@ -193,7 +214,7 @@ h1 {
 
 
 /* スマホ対応 */
-@media (max-width: 720px) {
+@media (max-width: 650px) {
   body {
     padding: 20px 10px;
   }
@@ -208,14 +229,13 @@ h1 {
     font-size: 1.2rem;
   }
   .container {
-    padding: 16px;
     border-radius: 10px;
   }
 }
 
 /* お弁当エリアの下に余白を追加 */
 #bento-area {
-  margin-bottom: 40px; /* 余白を追加してボタンが重ならないように */
+  margin-bottom: 60px; /* 余白を追加してボタンが重ならないように */
 }
 
 /* ボタンを中央寄せ＆上に少し余白 */
@@ -226,4 +246,46 @@ button {
   font-size: 1rem;
   z-index: 100; /* 念のためボタンを前面に */
   position: relative; /* 重なり防止 */
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  color: #4f260b;
+  background-color: #f4e8c3;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center; /* 中央寄せ */
+  gap: 20px; /* ←ボタン同士の間隔（pxを調整） */
+}
+
+/* それぞれのボタンに別々のスタイル */
+#rename-btn {
+  background-color: #ffffff;
+  color: #4b4343;
+  padding: 10px 16px;
+  border: 2px solid #ffa812;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+#share-x {
+  background-color: #ffa812;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
