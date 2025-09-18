@@ -32,7 +32,7 @@ h1 {
 
 .container {
   width: 90%; /* ←スマホ対応 */
-  max-width: 600px; /* ←PC用 */
+  max-width: 900px; /* ←PC用 */
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
   padding: 30px; /* ←スマホ用に小さく */
@@ -103,6 +103,7 @@ h1 {
   display: inline-block;                /* 内容に合わせつつ、中央寄せ */
   width: auto;                          /* 固定幅なし */
   padding: 12px 40px;                   /* 上下12px・左右30pxで余白多め */
+  font-family: 'Zen Maru Gothic', sans-serif;
   font-size: 1.2rem;
   border: 2px solid #ccc;
   border-radius: 20px;                /* 超丸にする（pill型） */
@@ -214,9 +215,10 @@ h1 {
 
 
 /* スマホ対応 */
-@media (max-width: 650px) {
+@media (max-width: 768px) {
   body {
     padding: 20px 10px;
+    background-size: contain; 
   }
   .grid {
     grid-template-columns: 1fr;
@@ -240,6 +242,7 @@ h1 {
 
 /* ボタンを中央寄せ＆上に少し余白 */
 button {
+  font-family: 'Zen Maru Gothic', sans-serif;
   display: inline-block;
   margin-top: 20px; /* 上に余白 */
   padding: 10px 20px;
@@ -273,9 +276,10 @@ button {
 
 /* それぞれのボタンに別々のスタイル */
 #rename-btn {
+  font-family: 'Zen Maru Gothic', sans-serif;
   background-color: #ffffff;
-  color: #4b4343;
-  padding: 10px 16px;
+  color: #4f260b;
+  padding: 5px 12px;
   border: 2px solid #ffa812;
   border-radius: 9999px;
   cursor: pointer;
