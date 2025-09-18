@@ -134,6 +134,8 @@ if (backBtn) {
   });
 }
 
+
+
 const restartBtn = document.getElementById('restart-btn'); // ←finish.htmlのボタンidに合わせる
 if (restartBtn) {
   restartBtn.addEventListener('click', () => {
@@ -212,6 +214,7 @@ function setupFinishPage(randomMessage) {
         bentoTitle = newTitle;
         if (titleElement) titleElement.textContent = bentoTitle;
         localStorage.setItem('customBentoTitle', bentoTitle);
+        renameContainer.style.display = 'none';
       }
     });
   }
