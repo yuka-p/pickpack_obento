@@ -9,28 +9,29 @@ function saveSelections(selections) {
 /* ====================== 日本語名マップ ====================== */
 const names = {
   // 主菜
-  'grilled-salmon': '焼き鮭',
-  'saba-salt': 'さばの塩焼き',
-  'sawara-saikyo': 'さわらの西京焼き',
-  'sanma-salt': 'さんま',
+  'salmon': '焼き鮭',
+  'saba': 'さばの塩焼き',
+  'sawara': 'さわらの西京焼き',
+  'sanma': 'さんま',
   'tonkatsu': 'とんかつ',
   'karaage': 'からあげ',
-  'chicken-nanban': 'チキン南蛮',
+  'nanban': 'チキン南蛮',
   'pork-ginger': '豚の生姜焼き',
   'nikujaga': '肉じゃが',
   'hamburg': 'ハンバーグ',
   // 副菜
   'sausage': 'ウインナー',
-  'shrimp-gratin': 'エビグラタン',
+  'gratin': 'エビグラタン',
   'minitomato': 'ミニトマト',
   'meatballs': 'ミートボール',
   'tamagoyaki': 'たまごやき',
-  'kinpira-gobo': 'きんぴらごぼう',
+  'kinpira': 'きんぴらごぼう',
   'spinach': 'ほうれん草の和え物',
   'potato-salad': 'ポテトサラダ',
-  'macaroni-salad': 'マカロニサラダ',
-  'boiled-pumpkin': 'かぼちゃの煮物',
+  'macaroni': 'マカロニサラダ',
+  'pumpkin': 'かぼちゃの煮物',
   'mushroom': 'ピーマンときのこの炒め物',
+  'aspara': 'アスパラベーコン'
 };
 function jpName(key) {
   return names[key] || key || '';
@@ -154,27 +155,31 @@ if (restartBtn) {
 /* ====================== finish.html 用 弁当表示 ====================== */
 function renderBento(data) {
   const bentoData = data || getSelections();
+  console.log('bentoData:', bentoData);
+  
   const layout = {
     rice:    { left: '32%', top: '60%', width: '280px' },
     leaf:    { left: '50%', top: '50%', width: '350px' },
     main:    { left: '67%', top: '55%', width: '280px' },
     side1:   { left: '55%', top: '75%', width: '180px' },
-    side2:   { left: '75%', top: '75%', width: '180px' },
+    side2:   { left: '80%', top: '70%', width: '180px' },
     side3:   { left: '60%', top: '25%', width: '180px' },
     dessert: { left: '82%', top: '35%', width: '150px' }
   };
 
   // 例外ルール：特定のおかずのサイズ・位置
   const exceptions = {
-    'apple-rabbit': { left: '78%', top: '35%', width: '180px' },
+    'apple':        { left: '78%', top: '35%', width: '180px' },
     'orange':       { left: '82%', top: '30%', width: '150px' },
     'omanju':       { left: '82%', top: '35%', width: '180px' },
     'halloween':    { left: '82%', top: '40%', width: '200px' },
-    'nikujaga':     { left: '75%', top: '55%', width: '280px'  },
-    'hamburg': { left: '67%', top: '60%', width: '240px'  },
+    'oimo':         { left: '80%', top: '33%', width: '200px' },
+    'nikujaga':     { left: '68%', top: '60%', width: '270px'  },
+    'hamburg':      { left: '67%', top: '60%', width: '240px'  },
     'karaage':      { left: '67%', top: '55%', width: '250px'  },
-    'tonkatsu':     { left: '67%', top: '50%', width: '300px'  },
-    'sanma-salt':   { left: '50%', top: '50%', width: '480px'  },
+    'tonkatsu':     { left: '65%', top: '50%', width: '320px'  },
+    'sanma':        { left: '50%', top: '45%', width: '480px'  },
+    'pork-ginger':  { left: '67%', top: '60%', width: '240px'  },
 
   };
 
@@ -182,7 +187,9 @@ function renderBento(data) {
   const sizeExceptions = {
     'sausage':  '250px',
     'minitomato':  '250px',
-    'kinpira-gobo':  '120px',
+    'kinpira':  '120px',
+    'aspara':  '250px',
+    'spinach':  '150px'
   };
 
   const layer = document.getElementById('food-layer');
@@ -198,8 +205,15 @@ function renderBento(data) {
    */
     const createImg = (src, key, defaultPos, className) => {
       let pos = { ...defaultPos };
-      if (exceptions[key]) pos = { ...exceptions[key] };
-      else if (sizeExceptions[key]) pos.width = sizeExceptions[key];
+      // 位置例外
+      if (exceptions[key]) {
+        pos = { ...pos, ...exceptions[key] }; // 位置・サイズを上書き
+      }
+
+// サイズ例外（widthだけ上書き）
+      if (sizeExceptions[key]) {
+         pos.width = sizeExceptions[key];
+      }
 
     const img = document.createElement('img');
     img.src = src;
@@ -215,55 +229,68 @@ function renderBento(data) {
   // --- ここから描画 ---
   // side3（奥）
   if (bentoData.side?.[2])
-    layer.appendChild(createImg(`images/${bentoData.side[2]}.png`, 'side3', layout.side3, 'side-back'));
+    layer.appendChild(createImg(`images/${bentoData.side[2]}.png`, bentoData.side[2], layout.side3, 'side-back'));
 
   // dessert
   if (bentoData.dessert)
-    layer.appendChild(createImg(`images/${bentoData.dessert}.png`, 'dessert', layout.dessert, 'dessert-back'));
+    layer.appendChild(createImg(`images/${bentoData.dessert}.png`, bentoData.dessert, layout.dessert, 'dessert-back'));
 
   // rice
   if (bentoData.rice)
-    layer.appendChild(createImg(`images/${bentoData.rice}.png`, 'rice', layout.rice, 'rice'));
+    if (bentoData.rice)
+  layer.appendChild(createImg(`images/${bentoData.rice}.png`, bentoData.rice, layout.rice, 'rice'));
 
   // leaf
   layer.appendChild(createImg('images/leaf.png', 'leaf', layout.leaf, 'leaf'));
 
   // main
   if (bentoData.main)
-    layer.appendChild(createImg(`images/${bentoData.main}.png`, 'main', layout.main, 'main'));
+    layer.appendChild(createImg(`images/${bentoData.main}.png`, bentoData.main, layout.main, 'main'));
+
 
   // side1 / side2（手前）
   if (bentoData.side?.[0])
-    layer.appendChild(createImg(`images/${bentoData.side[0]}.png`, 'side1', layout.side1, 'side-front'));
+    layer.appendChild(createImg(`images/${bentoData.side[0]}.png`, bentoData.side[0], layout.side1, 'side-front'));
+
   if (bentoData.side?.[1])
-    layer.appendChild(createImg(`images/${bentoData.side[1]}.png`, 'side2', layout.side2, 'side-front'));
+    layer.appendChild(createImg(`images/${bentoData.side[1]}.png`, bentoData.side[1], layout.side2, 'side-front'));
+
 }
 
 // ====================== 食べるボタン ======================
-function setupEatButton() {
+function setupEatButton(bentoData) {
   const eatBtn = document.getElementById('eat-btn');
   const layer = document.getElementById('food-layer');
-  if (!eatBtn || !layer) return;
+  if (!eatBtn || !layer || !bentoData) return;
 
-  const eatOrder = ['side1', 'side2', 'main', 'rice', 'side3', 'leaf', 'dessert'];
+  const eatOrder = [
+    bentoData.side?.[0],
+    bentoData.side?.[1],
+    bentoData.main,
+    bentoData.rice,
+    bentoData.side?.[2],
+    'leaf',
+    bentoData.dessert
+  ].filter(Boolean); // undefined を除外
 
   eatBtn.addEventListener('click', () => {
-  // layerにある現在の画像一覧を取得
-  const imgs = Array.from(layer.querySelectorAll('img'));
+    const imgs = Array.from(layer.querySelectorAll('img'));
 
-  // eatOrderの順序に基づいて、まだ残っている中で一番早く出てくる食材を探す
-  for (let i = 0; i < eatOrder.length; i++) {
-    const key = eatOrder[i];
-    const targetImg = imgs.find(img => img.dataset.key === key);
-    if (targetImg) {
-      targetImg.remove(); // この食材を食べる（削除する）
-      return;             // 1回のクリックで1つだけ削除する
+    for (let key of eatOrder) {
+      const targetImg = imgs.find(img => img.dataset.key === key);
+      if (targetImg) {
+        targetImg.remove();
+        return;
+      }
     }
-  }
 
-  // ここまで来たら全部食べ終わり
-  console.log('全部食べ終わりました！');
-});
+    const messageElement = document.getElementById('bento-message');
+    if (messageElement) {
+      messageElement.textContent = 'ごちそうさまでした！🍱✨';
+    } else {
+      alert('ごちそうさまでした！🍱✨');
+    }
+  });
 }
 
 /* ====================== finish.html 用 タイトル & シェア ====================== */
@@ -273,7 +300,7 @@ function setupFinishPage(randomMessage, selections) {
   const firstSideName = data.side?.[0] ? jpName(data.side[0]) : '副菜なし';
 
   // カスタムタイトル or デフォルト
-  let bentoTitle = localStorage.getItem('customBentoTitle') || `${mainName}と${firstSideName}のお弁当🍱`;
+  let bentoTitle = localStorage.getItem('customBentoTitle') || `${mainName}と${firstSideName}お弁当🍱`;
   const titleElement = document.getElementById('bento-title');
   if (titleElement) titleElement.textContent = bentoTitle;
 
@@ -369,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // finish.html用
   if (document.getElementById('food-layer')) {
     renderBento(selections);
+    setupEatButton(selections);
     setupFinishPage(randomMessage, selections); // ←selectionsを渡す
-    setupEatButton(); 
   }
 });
