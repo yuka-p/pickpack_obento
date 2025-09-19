@@ -277,7 +277,7 @@ button {
 .btn-group {
   display: flex;
   justify-content: center; /* 中央寄せ */
-  gap: 20px; /* ←ボタン同士の間隔（pxを調整） */
+  gap: 20px; /* ←ボタン同士の間隔（pxを調整）*/
 }
 
 /* それぞれのボタンに別々のスタイル */
