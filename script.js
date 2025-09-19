@@ -249,21 +249,25 @@ function setupEatButton() {
 
   eatBtn.addEventListener('click', () => {
   // layerにある現在の画像一覧を取得
-  const imgs = Array.from(layer.querySelectorAll('img'));
+    const imgs = Array.from(layer.querySelectorAll('img'));
 
   // eatOrderの順序に基づいて、まだ残っている中で一番早く出てくる食材を探す
-  for (let i = 0; i < eatOrder.length; i++) {
-    const key = eatOrder[i];
-    const targetImg = imgs.find(img => img.dataset.key === key);
-    if (targetImg) {
-      targetImg.remove(); // この食材を食べる（削除する）
-      return;             // 1回のクリックで1つだけ削除する
+    for (let i = 0; i < eatOrder.length; i++) {
+      const key = eatOrder[i];
+      const targetImg = imgs.find(img => img.dataset.key === key);
+      if (targetImg) {
+        targetImg.remove(); // この食材を食べる（削除する）
+        return;             // 1回のクリックで1つだけ削除する
+      }
     }
-  }
 
-  // ここまで来たら全部食べ終わり
-  console.log('全部食べ終わりました！');
-});
+    const messageElement = document.getElementById('bento-message');
+    if (messageElement) {
+      messageElement.textContent = 'ごちそうさまでした！🍱✨';
+    } else {
+      alert('ごちそうさまでした！🍱✨');
+    }
+  });
 }
 
 /* ====================== finish.html 用 タイトル & シェア ====================== */
