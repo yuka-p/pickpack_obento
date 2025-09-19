@@ -215,7 +215,7 @@ h1 {
 
 
 /* スマホ対応 */
-@media (max-width: 768px) {
+@media (max-width: 650px) {
   body {
     padding: 20px 10px;
     background-size: contain; 
