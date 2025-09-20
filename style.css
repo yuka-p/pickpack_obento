@@ -23,6 +23,12 @@ body {
   align-items: center; /* ←縦方向も中央に */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+body.loaded {
+  opacity: 1;
 }
 
 h1 {
@@ -87,7 +93,7 @@ h1 {
   margin-top: 18px;
   text-align: right;
   color: #666;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
 }
 
 /* 親要素（ボタンを縦に並べる場合） */
@@ -128,7 +134,7 @@ h1 {
   padding: 0;
   background: none;       /* 背景なし */
   border: none;           /* 枠線なし */
-  font-size: 16px;
+  font-size: 18px;
   color: #333;            /* 好きな色に変更可能 */
   text-align: center;       /* 文字揃え（左・中央・右）選べます */
   min-height: 1em;        /* 高さ確保（なくてもOK） */
@@ -139,13 +145,13 @@ h1 {
   padding: 0;
   background: none;       /* 背景なし */
   border: none;           /* 枠線なし */
-  font-size: 18px;
+  font-size: 20px;
   color: #333;            /* 好きな色に変更可能 */
   text-align: center;       /* 文字揃え（左・中央・右）選べます */
 }
 
 #custom-title-input {
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 20px; 
   padding: 10px; 
   width: 50%; 
@@ -213,10 +219,34 @@ h1 {
   z-index: 6;
 }
 
+.confetti-leaf {
+  position: fixed;
+  width: 40px; /* 葉っぱの大きさ（調整可） */
+  top: 50%; /* 画面中央スタート */
+  left: 50%;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(0.5);
+  pointer-events: none;
+  animation: explode 1s ease-out forwards;
+  
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    /* 飛び散る先の位置はJSで計算して反映 */
+    opacity: 0;
+  }
+}
+
 
 /* スマホ対応 */
 @media (max-width: 768px) {
   body {
+    font-size: 22px;
     padding: 20px 10px;
     background-size: contain; 
   }
@@ -236,7 +266,7 @@ h1 {
     font-size: 26px;    /* 文字を大きく */
   }
     button {
-    font-size: 20px;    /* ボタン文字も大きく */
+    font-size: 22px;    /* ボタン文字も大きく */
     padding: 12px 20px; /* ボタンをタップしやすく */
   }
 }
@@ -249,6 +279,7 @@ h1 {
 /* ボタンを中央寄せ＆上に少し余白 */
 button {
   font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 20px;
   display: inline-block;
   margin-top: 20px; /* 上に余白 */
   padding: 10px 20px;
@@ -274,6 +305,15 @@ button {
   border-radius: 0.5rem;
 }
 
+#start-btn,
+#back-btn,
+#restart-btn,
+#go-side,
+#go-finish{
+  font-size: 20px;   
+  padding: 15px 30px;  
+}
+
 .btn-group {
   display: flex;
   justify-content: center; /* 中央寄せ */
@@ -283,6 +323,7 @@ button {
 /* それぞれのボタンに別々のスタイル */
 #rename-btn {
   font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 20px;
   background-color: #ffffff;
   color: #4f260b;
   padding: 5px 12px;
@@ -294,6 +335,7 @@ button {
 #share-x {
   background-color: #ffa812;
   color: white;
+  font-size: 20px;
   padding: 10px 16px;
   border: none;
   border-radius: 8px;
@@ -302,10 +344,10 @@ button {
 
 #eat-btn {
   font-family: 'Yomogi', cursive;
-  font-size: 16px;
+  font-size: 20px;
   background-color: #e8e5e0;
   color: #94877f;
-  padding: 20px 20px;
+  padding: 30px 20px;
   border: none;
   border-radius: 9999px;
   cursor: pointer;
