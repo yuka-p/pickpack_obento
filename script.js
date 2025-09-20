@@ -210,6 +210,7 @@ function renderBento(data) {
 
   // 例外ルール：特定のおかずのサイズ・位置
   const exceptions = {
+    'onigiri':      { left: '27%', top: '50%', width: '430px' },
     'apple':        { left: '78%', top: '35%', width: '180px' },
     'orange':       { left: '82%', top: '30%', width: '150px' },
     'omanju':       { left: '82%', top: '35%', width: '180px' },
