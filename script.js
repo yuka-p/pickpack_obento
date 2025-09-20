@@ -6,6 +6,10 @@ function saveSelections(selections) {
   localStorage.setItem('selections', JSON.stringify(selections));
 }
 
+window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+});
+
 /* ====================== 日本語名マップ ====================== */
 const names = {
   // 主菜
@@ -114,7 +118,7 @@ function setupOptionButtons(selections) {
     });
   }
 
-   document.querySelectorAll('.option-btn').forEach(btn => {
+  document.querySelectorAll('.option-btn').forEach(btn => {
     const type = btn.dataset.type;
     const value = btn.dataset.value;
 
@@ -136,23 +140,60 @@ function setupOptionButtons(selections) {
 const backBtn = document.getElementById('back-btn');
 if (backBtn) {
   backBtn.addEventListener('click', () => {
-    history.back(); // 1つ前のページに戻る
+    history.back();
   });
 }
 
-const restartBtn = document.getElementById('restart-btn'); // ←finish.htmlのボタンidに合わせる
+const restartBtn = document.getElementById('restart-btn'); 
 if (restartBtn) {
   restartBtn.addEventListener('click', () => {
-    // 1. 保存していた選択状態を消す
     localStorage.removeItem('selections');
-    // 2. カスタムタイトルも消したい場合はこれも
     localStorage.removeItem('customBentoTitle');
-    // 3. 最初のページへ戻る
-    window.location.href = 'index.html'; // ←最初のページのファイル名に合わせる
+    window.location.href = 'index.html';
   });
 }
 
 /* ====================== finish.html 用 弁当表示 ====================== */
+function showFallingLeaves() {
+  const leafImages = [
+    'images/momiji.png',
+    'images/icho.png',
+    'images/ochiba.png',
+  ];
+
+  for (let i = 0; i < 20; i++) {
+    const leaf = document.createElement('img');
+    leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
+    leaf.className = 'falling-leaf';
+    leaf.style.position = 'fixed';
+    leaf.style.top = '50%';
+    leaf.style.left = '50%';
+    leaf.style.width = (30 + Math.random() * 40) + 'px';
+    leaf.style.zIndex = 9999;
+    leaf.style.pointerEvents = 'none';
+    document.body.appendChild(leaf);
+
+    const x = (Math.random() - 0.5) * 600;
+    const y = (Math.random() - 0.5) * 600;
+
+    leaf.animate([
+      {
+        transform: `translate(-50%, -50%) scale(0.5)`,
+        opacity: 1
+      },
+      {
+        transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${Math.random()*720}deg) scale(1)`,
+        opacity: 0.8
+      }
+    ], {
+      duration: 3000 + Math.random() * 1000,
+      easing: 'ease-out',
+      fill: 'forwards'
+    });
+    setTimeout(() => leaf.remove(), 4000);
+  }
+}
+
 function renderBento(data) {
   const bentoData = data || getSelections();
   console.log('bentoData:', bentoData);
@@ -185,7 +226,7 @@ function renderBento(data) {
 
   // 食材別サイズ指定（widthだけ上書きする）
   const sizeExceptions = {
-    'sausage':  '250px',
+    'sausage':  '210px',
     'minitomato':  '250px',
     'kinpira':  '120px',
     'aspara':  '250px',
@@ -198,57 +239,48 @@ function renderBento(data) {
 
   /**
    * 画像生成ヘルパー
-   * @param {string} src 画像パス
-   * @param {string} key 食材名（exceptionsキー用）
-   * @param {object} defaultPos デフォルト位置
-   * @param {string} className クラス名
+   * @param {string} src
+   * @param {string} key
+   * @param {object} defaultPos
+   * @param {string} className
    */
     const createImg = (src, key, defaultPos, className) => {
       let pos = { ...defaultPos };
-      // 位置例外
       if (exceptions[key]) {
-        pos = { ...pos, ...exceptions[key] }; // 位置・サイズを上書き
+        pos = { ...pos, ...exceptions[key] };
       }
 
-// サイズ例外（widthだけ上書き）
       if (sizeExceptions[key]) {
          pos.width = sizeExceptions[key];
       }
 
     const img = document.createElement('img');
     img.src = src;
-    img.style.position = 'absolute'; // ←絶対位置指定
+    img.style.position = 'absolute';
     img.style.left = pos.left;
     img.style.top = pos.top;
     img.style.width = pos.width;
-    img.dataset.key = key; // 食べる用
+    img.dataset.key = key;
     img.className = className;
     return img;
   };
 
-  // --- ここから描画 ---
-  // side3（奥）
+  // --- 描画 ---
   if (bentoData.side?.[2])
     layer.appendChild(createImg(`images/${bentoData.side[2]}.png`, bentoData.side[2], layout.side3, 'side-back'));
 
-  // dessert
   if (bentoData.dessert)
     layer.appendChild(createImg(`images/${bentoData.dessert}.png`, bentoData.dessert, layout.dessert, 'dessert-back'));
 
-  // rice
   if (bentoData.rice)
     if (bentoData.rice)
   layer.appendChild(createImg(`images/${bentoData.rice}.png`, bentoData.rice, layout.rice, 'rice'));
 
-  // leaf
   layer.appendChild(createImg('images/leaf.png', 'leaf', layout.leaf, 'leaf'));
 
-  // main
   if (bentoData.main)
     layer.appendChild(createImg(`images/${bentoData.main}.png`, bentoData.main, layout.main, 'main'));
 
-
-  // side1 / side2（手前）
   if (bentoData.side?.[0])
     layer.appendChild(createImg(`images/${bentoData.side[0]}.png`, bentoData.side[0], layout.side1, 'side-front'));
 
@@ -271,7 +303,7 @@ function setupEatButton(bentoData) {
     bentoData.side?.[2],
     'leaf',
     bentoData.dessert
-  ].filter(Boolean); // undefined を除外
+  ].filter(Boolean);
 
   eatBtn.addEventListener('click', () => {
     const imgs = Array.from(layer.querySelectorAll('img'));
@@ -300,7 +332,7 @@ function setupFinishPage(randomMessage, selections) {
   const firstSideName = data.side?.[0] ? jpName(data.side[0]) : '副菜なし';
 
   // カスタムタイトル or デフォルト
-  let bentoTitle = localStorage.getItem('customBentoTitle') || `${mainName}と${firstSideName}お弁当🍱`;
+  let bentoTitle = localStorage.getItem('customBentoTitle') || `${mainName}と${firstSideName}弁当🍱`;
   const titleElement = document.getElementById('bento-title');
   if (titleElement) titleElement.textContent = bentoTitle;
 
@@ -331,7 +363,7 @@ function setupFinishPage(randomMessage, selections) {
   const shareXBtn = document.getElementById('share-x');
   if (shareXBtn) {
     shareXBtn.addEventListener('click', () => {
-      // 1. URLパラメータを作成
+      // URLパラメータを作成
       const params = new URLSearchParams();
       if (data.rice) params.set('rice', data.rice);
       if (data.main) params.set('main', data.main);
@@ -376,7 +408,7 @@ const messages = [
   'お弁当と一緒に秋もひとくちどうぞ🍁',
   'ひと口ごとに笑顔が増えますように🌸',
   '今日もおつかれさま🌿',
-  '休憩しながらいこう🐢'
+  '休憩することも大事だよ🐢'
 ];
 
 /* ====================== 初期化 ====================== */
@@ -398,5 +430,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderBento(selections);
     setupEatButton(selections);
     setupFinishPage(randomMessage, selections); // ←selectionsを渡す
+    showFallingLeaves();
   }
 });
