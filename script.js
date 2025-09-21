@@ -371,6 +371,8 @@ function setupFinishPage(randomMessage, selections) {
       if (data.side?.length) params.set('side', data.side.join(','));
       if (data.dessert) params.set('dessert', data.dessert);
 
+      if (bentoTitle) params.set('title', bentoTitle);
+
       // finish.htmlのURLを元に共有URL生成
       const baseURL = `${location.origin}${location.pathname}`;
       const sharePageURL = `${baseURL}?${params.toString()}`;
@@ -416,6 +418,24 @@ const messages = [
 document.addEventListener('DOMContentLoaded', () => {
   let selections = getSelectionsFromURL() || getSelections();
 
+  const params = new URLSearchParams(window.location.search);
+  const titleParam = params.get('title');
+
+  const mainName = jpName(selections.main) || '主菜なし';
+  const firstSideName = selections.side?.[0] ? jpName(selections.side[0]) : '副菜なし';
+  const defaultTitle = `${mainName}と${firstSideName}お弁当🍱`;
+
+  const titleElem = document.getElementById('bento-title');
+  if (titleElem) {
+    if (titleParam && titleParam.trim() !== '') {
+      titleElem.textContent = titleParam;
+      document.title = `${titleParam} | PickPackおべんとう`;
+    } else {
+      titleElem.textContent = defaultTitle;
+      document.title = `${defaultTitle} | PickPackおべんとう`;
+    }
+  }
+
   // ランダムメッセージ
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];
   const messageElement = document.getElementById('bento-message');
@@ -430,7 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('food-layer')) {
     renderBento(selections);
     setupEatButton(selections);
-    setupFinishPage(randomMessage, selections); // ←selectionsを渡す
+    setupFinishPage(randomMessage, selections, titleParam);
     showFallingLeaves();
   }
 });
