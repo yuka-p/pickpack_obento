@@ -327,15 +327,19 @@ function setupEatButton(bentoData) {
 }
 
 /* ====================== finish.html 用 タイトル & シェア ====================== */
-function setupFinishPage(randomMessage, selections) {
+function setupFinishPage(randomMessage, selections, bentoTitle) {
   const data = selections || getSelections();
   const mainName = jpName(data.main) || '主菜なし';
   const firstSideName = data.side?.[0] ? jpName(data.side[0]) : '副菜なし';
 
   // カスタムタイトル or デフォルト
-  let bentoTitle = localStorage.getItem('customBentoTitle') || `${mainName}と${firstSideName}弁当🍱`;
+  let titleToUse = bentoTitle || localStorage.getItem('customBentoTitle') || `${mainName}と${firstSideName}弁当🍱`;
+
   const titleElement = document.getElementById('bento-title');
-  if (titleElement) titleElement.textContent = bentoTitle;
+  if (titleElement) {
+    titleElement.textContent = titleToUse;
+    document.title = `${titleToUse} | PickPackおべんとう`;
+  }
 
   // 名前をつけるボタン
   const renameBtn = document.getElementById('rename-btn');
@@ -346,15 +350,17 @@ function setupFinishPage(randomMessage, selections) {
   if (renameBtn && renameContainer && customInput && updateBtn) {
     renameBtn.addEventListener('click', () => {
       renameContainer.style.display = 'block';
-      customInput.value = bentoTitle;
+      customInput.value = titleToUse;
     });
 
     updateBtn.addEventListener('click', () => {
       const newTitle = customInput.value.trim();
       if (newTitle) {
+        titleToUse = newTitle;
         bentoTitle = newTitle;
-        if (titleElement) titleElement.textContent = bentoTitle;
-        localStorage.setItem('customBentoTitle', bentoTitle);
+        if (titleElement) titleElement.textContent = titleToUse;
+        document.title = `${titleToUse} | PickPackおべんとう`;
+        localStorage.setItem('customBentoTitle', titleToUse);
         renameContainer.style.display = 'none';
       }
     });
@@ -378,7 +384,7 @@ function setupFinishPage(randomMessage, selections) {
       const sharePageURL = `${baseURL}?${params.toString()}`;
 
       const hashtags = 'pickpackおべんとう,お弁当をつくってみよう';
-      const text = `今日は「${bentoTitle}」 #${hashtags.replace(/,/g,' #')}`;
+      const text = `今日は「${titleToUse}」 #${hashtags.replace(/,/g,' #')}`;
       const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(sharePageURL)}`;
 
       window.open(shareURL, '_blank');
@@ -425,15 +431,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const firstSideName = selections.side?.[0] ? jpName(selections.side[0]) : '副菜なし';
   const defaultTitle = `${mainName}と${firstSideName}お弁当🍱`;
 
+  const storedTitle = localStorage.getItem('customBentoTitle');
+
+  let bentoTitle = titleParam && titleParam.trim() !== '' 
+    ? titleParam 
+    : storedTitle && storedTitle.trim() !== '' 
+      ? storedTitle 
+      : defaultTitle;
+
+  // 画面タイトルとmetaタイトルを反映
   const titleElem = document.getElementById('bento-title');
   if (titleElem) {
-    if (titleParam && titleParam.trim() !== '') {
-      titleElem.textContent = titleParam;
-      document.title = `${titleParam} | PickPackおべんとう`;
-    } else {
-      titleElem.textContent = defaultTitle;
-      document.title = `${defaultTitle} | PickPackおべんとう`;
-    }
+    titleElem.textContent = bentoTitle;
+    document.title = `${bentoTitle} | PickPackおべんとう`;
   }
 
   // ランダムメッセージ
@@ -450,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('food-layer')) {
     renderBento(selections);
     setupEatButton(selections);
-    setupFinishPage(randomMessage, selections, titleParam);
+    setupFinishPage(randomMessage, selections, bentoTitle);
     showFallingLeaves();
   }
 });
