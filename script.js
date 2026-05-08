@@ -1,4 +1,3 @@
-/* ====================== selections の取得・保存 ====================== */
 function getSelections() {
   return JSON.parse(localStorage.getItem('selections') || '{"rice":null,"main":null,"side":[],"dessert":null}');
 }
@@ -12,7 +11,7 @@ window.addEventListener('load', () => {
 
 /* ====================== 日本語名マップ ====================== */
 const names = {
-  // 主菜
+
   'salmon': '焼き鮭',
   'saba': 'さばの塩焼き',
   'sawara': 'さわらの西京焼き',
@@ -23,7 +22,7 @@ const names = {
   'pork-ginger': '豚の生姜焼き',
   'nikujaga': '肉じゃが',
   'hamburg': 'ハンバーグ',
-  // 副菜
+
   'sausage': 'ウインナー',
   'gratin': 'エビグラタン',
   'minitomato': 'ミニトマト',
@@ -208,7 +207,6 @@ function renderBento(data) {
     dessert: { left: '82%', top: '35%', width: '150px' }
   };
 
-  // 例外ルール：特定のおかずのサイズ・位置
   const exceptions = {
     'onigiri':      { left: '27%', top: '50%', width: '430px' },
     'apple':        { left: '78%', top: '35%', width: '180px' },
@@ -225,7 +223,6 @@ function renderBento(data) {
 
   };
 
-  // 食材別サイズ指定（widthだけ上書きする）
   const sizeExceptions = {
     'sausage':  '210px',
     'minitomato':  '250px',
@@ -266,7 +263,6 @@ function renderBento(data) {
     return img;
   };
 
-  // --- 描画 ---
   if (bentoData.side?.[2])
     layer.appendChild(createImg(`images/${bentoData.side[2]}.png`, bentoData.side[2], layout.side3, 'side-back'));
 
@@ -370,7 +366,7 @@ function setupFinishPage(randomMessage, selections, bentoTitle) {
   const shareXBtn = document.getElementById('share-x');
   if (shareXBtn) {
     shareXBtn.addEventListener('click', () => {
-      // URLパラメータを作成
+
       const params = new URLSearchParams();
       if (data.rice) params.set('rice', data.rice);
       if (data.main) params.set('main', data.main);
@@ -379,7 +375,7 @@ function setupFinishPage(randomMessage, selections, bentoTitle) {
 
       if (bentoTitle) params.set('title', bentoTitle);
 
-      // finish.htmlのURLを元に共有URL生成
+
       const baseURL = `${location.origin}${location.pathname}`;
       const sharePageURL = `${baseURL}?${params.toString()}`;
 
@@ -392,7 +388,6 @@ function setupFinishPage(randomMessage, selections, bentoTitle) {
   }
 }
 
-/* ====================== URLパラメータから selections 復元 ====================== */
 function getSelectionsFromURL() {
   const params = new URLSearchParams(location.search);
   if (!params.has('main') && !params.has('rice')) return null;
@@ -439,24 +434,21 @@ document.addEventListener('DOMContentLoaded', () => {
       ? storedTitle 
       : defaultTitle;
 
-  // 画面タイトルとmetaタイトルを反映
+
   const titleElem = document.getElementById('bento-title');
   if (titleElem) {
     titleElem.textContent = bentoTitle;
     document.title = `${bentoTitle} | PickPackおべんとう`;
   }
 
-  // ランダムメッセージ
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];
   const messageElement = document.getElementById('bento-message');
   if (messageElement) messageElement.textContent = randomMessage;
 
-  // 選択ボタンがあるページ
   if (document.querySelector('.option-btn')) {
     setupOptionButtons(selections);
   }
 
-  // finish.html用
   if (document.getElementById('food-layer')) {
     renderBento(selections);
     setupEatButton(selections);
