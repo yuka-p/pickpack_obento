@@ -1,6 +1,7 @@
 function getSelections() {
   return JSON.parse(localStorage.getItem('selections') || '{"rice":null,"main":null,"side":[],"dessert":null}');
 }
+
 function saveSelections(selections) {
   localStorage.setItem('selections', JSON.stringify(selections));
 }
@@ -36,6 +37,7 @@ const names = {
   'mushroom': 'ピーマンときのこの炒め物',
   'aspara': 'アスパラベーコン'
 };
+
 function jpName(key) {
   return names[key] || key || '';
 }
@@ -59,16 +61,12 @@ function setupOptionButtons(selections) {
         selections.rice = value;
         btn.classList.add('selected');
         if (riceMessage) riceMessage.textContent = message;
-      }
-
-      else if (type === 'main') {
+      } else if (type === 'main') {
         document.querySelectorAll('[data-type="main"]').forEach(b => b.classList.remove('selected'));
         selections.main = value;
         btn.classList.add('selected');
         if (mainMessage) mainMessage.textContent = message;
-      }
-
-      else if (type === 'side') {
+      } else if (type === 'side') {
         if (selections.side.includes(value)) {
           selections.side = selections.side.filter(v => v !== value);
           btn.classList.remove('selected');
@@ -77,13 +75,11 @@ function setupOptionButtons(selections) {
           btn.classList.add('selected');
           if (selections.side.length > 3) {
             const removed = selections.side.shift();
-            document.querySelector(`[data-type="side"][data-value="${removed}"]`)?.classList.remove('selected');
+            document.querySelector(`[data-type="side"][data-value="${removed}"]`) ? .classList.remove('selected');
           }
         }
         if (sideMessage) sideMessage.textContent = selections.side.length > 0 ? message : '';
-      }
-
-      else if (type === 'dessert') {
+      } else if (type === 'dessert') {
         document.querySelectorAll('[data-type="dessert"]').forEach(b => b.classList.remove('selected'));
         selections.dessert = value;
         btn.classList.add('selected');
@@ -103,7 +99,7 @@ function setupOptionButtons(selections) {
       }
       window.location.href = 'side.html';
     });
-    
+
   }
 
   const goFinish = document.getElementById('go-finish');
@@ -143,7 +139,7 @@ if (backBtn) {
   });
 }
 
-const restartBtn = document.getElementById('restart-btn'); 
+const restartBtn = document.getElementById('restart-btn');
 if (restartBtn) {
   restartBtn.addEventListener('click', () => {
     localStorage.removeItem('selections');
@@ -175,8 +171,7 @@ function showFallingLeaves() {
     const x = (Math.random() - 0.5) * 600;
     const y = (Math.random() - 0.5) * 600;
 
-    leaf.animate([
-      {
+    leaf.animate([{
         transform: `translate(-50%, -50%) scale(0.5)`,
         opacity: 1
       },
@@ -195,40 +190,115 @@ function showFallingLeaves() {
 
 function renderBento(data) {
   const bentoData = data || getSelections();
-  console.log('bentoData:', bentoData);
-  
+
   const layout = {
-    rice:    { left: '32%', top: '60%', width: '280px' },
-    leaf:    { left: '50%', top: '50%', width: '350px' },
-    main:    { left: '67%', top: '55%', width: '280px' },
-    side1:   { left: '55%', top: '75%', width: '180px' },
-    side2:   { left: '80%', top: '70%', width: '180px' },
-    side3:   { left: '60%', top: '25%', width: '180px' },
-    dessert: { left: '82%', top: '35%', width: '150px' }
+    rice: {
+      left: '32%',
+      top: '60%',
+      width: '280px'
+    },
+    leaf: {
+      left: '50%',
+      top: '50%',
+      width: '350px'
+    },
+    main: {
+      left: '67%',
+      top: '55%',
+      width: '280px'
+    },
+    side1: {
+      left: '55%',
+      top: '75%',
+      width: '180px'
+    },
+    side2: {
+      left: '80%',
+      top: '70%',
+      width: '180px'
+    },
+    side3: {
+      left: '60%',
+      top: '25%',
+      width: '180px'
+    },
+    dessert: {
+      left: '82%',
+      top: '35%',
+      width: '150px'
+    }
   };
 
   const exceptions = {
-    'onigiri':      { left: '27%', top: '50%', width: '430px' },
-    'apple':        { left: '78%', top: '35%', width: '180px' },
-    'orange':       { left: '82%', top: '30%', width: '150px' },
-    'omanju':       { left: '82%', top: '35%', width: '180px' },
-    'halloween':    { left: '82%', top: '40%', width: '200px' },
-    'oimo':         { left: '80%', top: '33%', width: '200px' },
-    'nikujaga':     { left: '68%', top: '60%', width: '270px'  },
-    'hamburg':      { left: '67%', top: '60%', width: '240px'  },
-    'karaage':      { left: '67%', top: '55%', width: '250px'  },
-    'tonkatsu':     { left: '65%', top: '50%', width: '320px'  },
-    'sanma':        { left: '50%', top: '45%', width: '480px'  },
-    'pork-ginger':  { left: '67%', top: '60%', width: '240px'  },
+    'onigiri': {
+      left: '27%',
+      top: '50%',
+      width: '430px'
+    },
+    'apple': {
+      left: '78%',
+      top: '35%',
+      width: '180px'
+    },
+    'orange': {
+      left: '82%',
+      top: '30%',
+      width: '150px'
+    },
+    'omanju': {
+      left: '82%',
+      top: '35%',
+      width: '180px'
+    },
+    'halloween': {
+      left: '82%',
+      top: '40%',
+      width: '200px'
+    },
+    'oimo': {
+      left: '80%',
+      top: '33%',
+      width: '200px'
+    },
+    'nikujaga': {
+      left: '68%',
+      top: '60%',
+      width: '270px'
+    },
+    'hamburg': {
+      left: '67%',
+      top: '60%',
+      width: '240px'
+    },
+    'karaage': {
+      left: '67%',
+      top: '55%',
+      width: '250px'
+    },
+    'tonkatsu': {
+      left: '65%',
+      top: '50%',
+      width: '320px'
+    },
+    'sanma': {
+      left: '50%',
+      top: '45%',
+      width: '480px'
+    },
+    'pork-ginger': {
+      left: '67%',
+      top: '60%',
+      width: '240px'
+    },
 
   };
 
   const sizeExceptions = {
-    'sausage':  '210px',
-    'minitomato':  '250px',
-    'kinpira':  '120px',
-    'aspara':  '250px',
-    'spinach':  '150px'
+    'sausage': '210px',
+    'minitomato': '250px',
+    'kinpira': '120px',
+    'aspara': '250px',
+    'spinach': '150px'
   };
 
   const layer = document.getElementById('food-layer');
@@ -242,15 +312,20 @@ function renderBento(data) {
    * @param {object} defaultPos
    * @param {string} className
    */
-    const createImg = (src, key, defaultPos, className) => {
-      let pos = { ...defaultPos };
-      if (exceptions[key]) {
-        pos = { ...pos, ...exceptions[key] };
-      }
+  const createImg = (src, key, defaultPos, className) => {
+    let pos = {
+      ...defaultPos
+    };
+    if (exceptions[key]) {
+      pos = {
+        ...pos,
+        ...exceptions[key]
+      };
+    }
 
-      if (sizeExceptions[key]) {
-         pos.width = sizeExceptions[key];
-      }
+    if (sizeExceptions[key]) {
+      pos.width = sizeExceptions[key];
+    }
 
     const img = document.createElement('img');
     img.src = src;
@@ -263,25 +338,24 @@ function renderBento(data) {
     return img;
   };
 
-  if (bentoData.side?.[2])
+  if (bentoData.side ? . [2])
     layer.appendChild(createImg(`images/${bentoData.side[2]}.png`, bentoData.side[2], layout.side3, 'side-back'));
 
   if (bentoData.dessert)
     layer.appendChild(createImg(`images/${bentoData.dessert}.png`, bentoData.dessert, layout.dessert, 'dessert-back'));
 
   if (bentoData.rice)
-    if (bentoData.rice)
-  layer.appendChild(createImg(`images/${bentoData.rice}.png`, bentoData.rice, layout.rice, 'rice'));
+    layer.appendChild(createImg(`images/${bentoData.rice}.png`, bentoData.rice, layout.rice, 'rice'));
 
   layer.appendChild(createImg('images/leaf.png', 'leaf', layout.leaf, 'leaf'));
 
   if (bentoData.main)
     layer.appendChild(createImg(`images/${bentoData.main}.png`, bentoData.main, layout.main, 'main'));
 
-  if (bentoData.side?.[0])
+  if (bentoData.side ? . [0])
     layer.appendChild(createImg(`images/${bentoData.side[0]}.png`, bentoData.side[0], layout.side1, 'side-front'));
 
-  if (bentoData.side?.[1])
+  if (bentoData.side ? . [1])
     layer.appendChild(createImg(`images/${bentoData.side[1]}.png`, bentoData.side[1], layout.side2, 'side-front'));
 
 }
@@ -293,11 +367,11 @@ function setupEatButton(bentoData) {
   if (!eatBtn || !layer || !bentoData) return;
 
   const eatOrder = [
-    bentoData.side?.[0],
-    bentoData.side?.[1],
+    bentoData.side ? . [0],
+    bentoData.side ? . [1],
     bentoData.main,
     bentoData.rice,
-    bentoData.side?.[2],
+    bentoData.side ? . [2],
     'leaf',
     bentoData.dessert
   ].filter(Boolean);
@@ -326,7 +400,7 @@ function setupEatButton(bentoData) {
 function setupFinishPage(randomMessage, selections, bentoTitle) {
   const data = selections || getSelections();
   const mainName = jpName(data.main) || '主菜なし';
-  const firstSideName = data.side?.[0] ? jpName(data.side[0]) : '副菜なし';
+  const firstSideName = data.side ? . [0] ? jpName(data.side[0]) : '副菜なし';
 
   // カスタムタイトル or デフォルト
   let titleToUse = bentoTitle || localStorage.getItem('customBentoTitle') || `${mainName}と${firstSideName}弁当🍱`;
@@ -370,7 +444,7 @@ function setupFinishPage(randomMessage, selections, bentoTitle) {
       const params = new URLSearchParams();
       if (data.rice) params.set('rice', data.rice);
       if (data.main) params.set('main', data.main);
-      if (data.side?.length) params.set('side', data.side.join(','));
+      if (data.side ? .length) params.set('side', data.side.join(','));
       if (data.dessert) params.set('dessert', data.dessert);
 
       if (bentoTitle) params.set('title', bentoTitle);
@@ -423,22 +497,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const titleParam = params.get('title');
 
   const mainName = jpName(selections.main) || '主菜なし';
-  const firstSideName = selections.side?.[0] ? jpName(selections.side[0]) : '副菜なし';
+  const firstSideName = selections.side ? . [0] ? jpName(selections.side[0]) : '副菜なし';
   const defaultTitle = `${mainName}と${firstSideName}お弁当🍱`;
 
   const storedTitle = localStorage.getItem('customBentoTitle');
 
-  let bentoTitle = titleParam && titleParam.trim() !== '' 
-    ? titleParam 
-    : storedTitle && storedTitle.trim() !== '' 
-      ? storedTitle 
-      : defaultTitle;
+  let bentoTitle = titleParam && titleParam.trim() !== '' ?
+    titleParam :
+    storedTitle && storedTitle.trim() !== '' ?
+    storedTitle :
+    defaultTitle;
 
 
   const titleElem = document.getElementById('bento-title');
   if (titleElem) {
     titleElem.textContent = bentoTitle;
-    document.title = `${bentoTitle} | PickPackおべんとう`;
+    document.title = `${bentoTitle} | pickpackおべんとう`;
   }
 
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];
