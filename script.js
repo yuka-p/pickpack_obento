@@ -547,7 +547,7 @@ function setupFinishPage(randomMessage, selections, bentoTitle) {
         titleToUse = newTitle;
         bentoTitle = newTitle;
         if (titleElement) titleElement.textContent = titleToUse;
-        document.title = `${titleToUse} | PickPackおべんとう`;
+        document.title = `${titleToUse} | pickpackおべんとう`;
         localStorage.setItem("customBentoTitle", titleToUse);
         renameContainer.style.display = "none";
       }
@@ -619,8 +619,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== 選択内容の取得 =====
   // URL パラメータから復元 OR localStorage から取得
   let selections = getSelectionsFromURL() || getSelections();
-  // ===== URL パラメータからタイトル情報を取得 =====
 
+  // ===== URL パラメータからタイトル情報を取得 =====
   const params = new URLSearchParams(window.location.search);
   const titleParam = params.get("title");
 
